@@ -1,10 +1,8 @@
-import _ from 'lodash';
+// import _ from 'lodash';
 import './style.css';
 import refresh from './images/refresh.svg';
 import enter from './images/enter-12.svg';
 import dots from './images/three-dots.svg';
-
-
 
 const dataBase = [
   {
@@ -56,10 +54,10 @@ function renderUI() {
     return container;
   });
 
-  // Add logic for rendering image here 
+  // Add logic for rendering image here
   const refreshImageCont = document.querySelector('.refresh-icon');
   const enterImageCont = document.querySelector('.inputt');
-  
+
   const myIcon = new Image();
   myIcon.src = refresh;
 
@@ -68,7 +66,6 @@ function renderUI() {
   const enterIcon = new Image();
   enterIcon.src = enter;
   enterImageCont.appendChild(enterIcon);
-
 }
- 
+
 document.body.appendChild(renderUI());
