@@ -10,6 +10,7 @@ export const handleUI = () => {
 
   const myIcon = new Image();
   myIcon.src = refresh;
+  myIcon.id = 'refreshIcon';
 
   refreshImageCont.appendChild(myIcon);
 
@@ -28,7 +29,7 @@ export const add = () => {
 
     todo.innerHTML = `<div class="list">
                           <div class="task">
-                            <input type="checkbox" id="enter-todo">
+                            <input type="checkbox" class="entertodo" id="${todoObj.index}">
                             <label for="enter-todo">
                               ${todoObj.description}
                             </label>

@@ -6,6 +6,7 @@ import {
 import { getLocalStorage, addLocalStorage } from './modules/localstorage.js';
 import List from './modules/constructor.js';
 
+
 handleUI();
 add();
 
@@ -33,17 +34,6 @@ enterTodo.addEventListener('keypress', (e) => {
   }
 });
 
-// update task
-// const tasksArray = document.querySelectorAll('label');
-// console.log(tasksArray)
-// tasksArray.forEach((task) => {
-//   task.addEventListener('click', (e) => {
-//     console.log(e.target)
-
-//     updateUI(e);
-//   });
-// })
-
 // Remove task from list
 const removeBtn = document.querySelectorAll('.remove');
 // console.log(removeBtn)
@@ -55,3 +45,39 @@ removeBtn.forEach((btn) => {
     window.location.reload();
   });
 });
+
+
+let boxes = document.getElementsByClassName('entertodo').length;
+
+function save() {
+  for(let i = 1; i <= boxes; i++) {
+    var checkbox = document.getElementById(String(i));
+    localStorage.setItem('checkbox' + String(i), checkbox.checked)
+  }
+}
+
+// Loading checkbox status
+for(let i = 1; i <= boxes; i++) {
+  var checked = JSON.parse(localStorage.getItem('checkbox' + String(i)));
+  document.getElementById(String(i)).checked = checked;
+}
+
+window.addEventListener('change', save);
+
+// Clear everything from the  on refresh icon click
+const ul = document.getElementById('to-do-container');
+const refresh = document.getElementById('refreshIcon');
+refresh.addEventListener('click', () => {
+  ul.classList.add('active');
+  localStorage.clear()
+  window.location.reload();
+});
+
+
+const completeAllChecked = document.getElementById('complete');
+completeAllChecked.addEventListener('click', () => {
+  const getTasks = getLocalStorage().localTodos;
+  const unChecked = getTasks.filter((task) => checked !== true)
+}) 
+
+

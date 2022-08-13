@@ -96,3 +96,7 @@ img:hover {
   font-family: cursive;
   font-weight: 600;
 }
+
+ul.active {
+  display: none;
+}
