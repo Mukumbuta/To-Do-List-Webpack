@@ -1,9 +1,10 @@
 // import _ from 'lodash';
 import './style.css';
-import { add, handleUI, remove, updateUI } from './modules/UI.js';
+import {
+  add, handleUI, remove,
+} from './modules/UI.js';
 import { getLocalStorage, addLocalStorage } from './modules/localstorage.js';
 import List from './modules/constructor.js';
-
 
 handleUI();
 add();
@@ -38,7 +39,7 @@ enterTodo.addEventListener('keypress', (e) => {
 // tasksArray.forEach((task) => {
 //   task.addEventListener('click', (e) => {
 //     console.log(e.target)
-    
+
 //     updateUI(e);
 //   });
 // })

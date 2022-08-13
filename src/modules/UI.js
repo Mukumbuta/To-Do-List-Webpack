@@ -2,7 +2,6 @@ import refresh from '../assets/refresh.svg';
 import enter from '../assets/enter-12.svg';
 import deleteIcon from '../assets/delete-524.svg';
 import { getLocalStorage, removeLocalStorage } from './localstorage.js';
-import { update } from 'lodash';
 
 export const handleUI = () => {
   // Add logic for rendering image here
@@ -43,24 +42,6 @@ export const add = () => {
     return container;
   });
 };
-
-// function saveItem(e) {
-//   let itemInput = document.getElementById('enter-todo');
-//   let inputValue = e.target.value;
-//   if(e.target.value.length > 0 && (e.type === 'click')) {
-//     itemInput.textContent = e.target.value;
-//     e.target.parentNode.prepend(itemInput);
-//     e.target.remove();
-//   }
-// }
-
-// export const updateUI = (e) => {
-//   let item = e.target.innerHTML;
-//   let itemInput = document.getElementById('enter-todo');
-//   itemInput.value = item;
-//   itemInput.addEventListener('click', saveItem);
-//   itemInput.select();
-// }
 
 export const remove = (todoID) => {
   removeLocalStorage(todoID);
