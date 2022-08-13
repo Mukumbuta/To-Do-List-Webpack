@@ -18,11 +18,17 @@ enterTodo.addEventListener('keypress', (e) => {
     let complete = false;
     const todoList = getLocalStorage();
     let index = todoList.length + 1;
-    console.log(index)
-
-    const newTodo = new List(description, complete, index);
-    window.location.reload();
-    addLocalStorage(newTodo);
+    if(description === '') {
+      const error = document.getElementById('error');
+      error.textContent = 'Task description cannot be empty!';
+      setTimeout(() => {
+        error.textContent = '';
+      }, 2000)
+    } else {
+      const newTodo = new List(description, complete, index);
+      window.location.reload();
+      addLocalStorage(newTodo);
+    }
   }
 });
 

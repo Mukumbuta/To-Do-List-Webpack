@@ -90,3 +90,9 @@ img:hover {
   height: 60px;
   margin-top: -22px;
 }
+
+#error {
+  color: red;
+  font-family: cursive;
+  font-weight: 600;
+}
