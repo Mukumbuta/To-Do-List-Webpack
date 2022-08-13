@@ -84,17 +84,9 @@ img:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgb(218, 217, 217);
-  height: 60px;
-}
-
-ul {
-  margin-bottom: -6px;
-}
-
-#complete input {
-  border: none;
-  background-color: rgb(218, 217, 217);
   font-family: cursive;
   font-size: large;
+  background-color: rgb(218, 217, 217);
+  height: 60px;
+  margin-top: -22px;
 }
