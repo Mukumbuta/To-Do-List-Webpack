@@ -1,10 +1,11 @@
 import refresh from '../assets/refresh.svg';
 import enter from '../assets/enter-12.svg';
 import deleteIcon from '../assets/delete-524.svg';
+import dots from '../assets/three-dots.svg';
 import { getLocalStorage, removeLocalStorage } from './localstorage.js';
 
 export const handleUI = () => {
-  // Add logic for rendering image here
+// Add logic for rendering image here
   const refreshImageCont = document.querySelector('.refresh-icon');
   const enterImageCont = document.querySelector('.inputt');
 
@@ -35,7 +36,8 @@ export const add = () => {
                             </label>
                           </div>
                           <div class="image">
-                            <img src="${deleteIcon}" class="remove" id="${todoObj.index}" alt="three dots">
+                            <img src="${dots}" class="edit" id="${todoObj.index}" alt="three-dots icon">
+                            <img src="${deleteIcon}" class="remove" id="${todoObj.index}" alt="dust-bin icon">
                           </div>
                         </div>`;
 

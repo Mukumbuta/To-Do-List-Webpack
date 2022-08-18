@@ -30,3 +30,21 @@ export const removeLocalStorage = (todoIndex) => {
   });
   localStorage.setItem('todolist', JSON.stringify(alllocaltodos));
 };
+
+// Edit To DO Item
+export const editLocalStorage = (id) => {
+  const inputBox = document.getElementById('enter-todo');
+  const localToDos = getLocalStorage().localTodos;
+  const edited = localToDos.filter((todo) => todo.index === parseInt(id, 10));
+  inputBox.value = edited[0].description;
+
+  // Save the changed to the edited to do item
+  inputBox.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      edited.description = inputBox.value;
+      inputBox.value = '';
+      localToDos[id - 1].description = edited.description;
+      localStorage.setItem('todolist', JSON.stringify(localToDos));
+    }
+  });
+};

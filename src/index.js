@@ -3,9 +3,8 @@ import './style.css';
 import {
   add, handleUI, remove,
 } from './modules/UI.js';
-import { getLocalStorage, addLocalStorage } from './modules/localstorage.js';
+import { getLocalStorage, addLocalStorage, editLocalStorage } from './modules/localstorage.js';
 import List from './modules/constructor.js';
-
 
 handleUI();
 add();
@@ -46,19 +45,18 @@ removeBtn.forEach((btn) => {
   });
 });
 
-
-let boxes = document.getElementsByClassName('entertodo').length;
-
+/* eslint-disable no-plusplus */
+const boxes = document.getElementsByClassName('entertodo').length;
 function save() {
-  for(let i = 1; i <= boxes; i++) {
-    var checkbox = document.getElementById(String(i));
-    localStorage.setItem('checkbox' + String(i), checkbox.checked)
+  for (let i = 1; i <= boxes; i++) {
+    const checkbox = document.getElementById(String(i));
+    localStorage.setItem(`checkbox${String(i)}`, checkbox.checked);
   }
 }
 
 // Loading checkbox status
-for(let i = 1; i <= boxes; i++) {
-  var checked = JSON.parse(localStorage.getItem('checkbox' + String(i)));
+for (let i = 1; i <= boxes; i++) {
+  const checked = JSON.parse(localStorage.getItem(`checkbox${String(i)}`));
   document.getElementById(String(i)).checked = checked;
 }
 
@@ -69,15 +67,23 @@ const ul = document.getElementById('to-do-container');
 const refresh = document.getElementById('refreshIcon');
 refresh.addEventListener('click', () => {
   ul.classList.add('active');
-  localStorage.clear()
+  localStorage.clear();
   window.location.reload();
 });
-
 
 const completeAllChecked = document.getElementById('complete');
 completeAllChecked.addEventListener('click', () => {
   const getTasks = getLocalStorage().localTodos;
-  const unChecked = getTasks.filter((task) => checked !== true)
-}) 
+  const unChecked = getTasks.filter((task) => task.checked !== true);
 
+  localStorage.setItem('todolist', JSON.stringify(unChecked));
+});
 
+// Event: Edit To Do Item
+const editBtn = document.querySelectorAll('.edit');
+editBtn.forEach((btn) => {
+  btn.addEventListener('click', (e) => {
+    const { id } = e.target;
+    editLocalStorage(id);
+  });
+});

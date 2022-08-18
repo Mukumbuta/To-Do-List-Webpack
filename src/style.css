@@ -100,3 +100,15 @@ img:hover {
 ul.active {
   display: none;
 }
+
+.image {
+  display: flex;
+}
+
+.remove {
+  display: none;
+}
+
+.edit:hover + .remove {
+  display: inline-block;
+}
