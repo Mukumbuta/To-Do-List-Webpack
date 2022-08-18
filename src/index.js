@@ -1,71 +1,89 @@
 // import _ from 'lodash';
 import './style.css';
-import refresh from './images/refresh.svg';
-import enter from './images/enter-12.svg';
-import dots from './images/three-dots.svg';
+import {
+  add, handleUI, remove,
+} from './modules/UI.js';
+import { getLocalStorage, addLocalStorage, editLocalStorage } from './modules/localstorage.js';
+import List from './modules/constructor.js';
 
-const dataBase = [
-  {
-    description: 'Take my daughter to school',
-    completed: true,
-    index: 1,
-  },
-  {
-    description: 'Join Morning Call Session',
-    completed: true,
-    index: 1,
-  },
-  {
-    description: 'Join my coding partner',
-    completed: true,
-    index: 1,
-  },
-  {
-    description: 'Pick up my daughter from school',
-    completed: false,
-    index: 1,
-  },
-];
+handleUI();
+add();
 
-function renderUI() {
-  const container = document.getElementById('to-do-container');
-  dataBase.forEach((todoObj) => {
-    const todo = document.createElement('li');
-    todo.classList.add('list-item');
+// Handle DOM events
+// Add task to list
+const enterTodo = document.getElementById('enter-todo');
+enterTodo.addEventListener('keypress', (e) => {
+  if (e.key === 'Enter') {
+    // e.preventDefault();
+    const description = document.getElementById('enter-todo').value;
+    const complete = false;
+    const todoList = getLocalStorage();
+    const index = todoList.length + 1;
+    if (description === '') {
+      const error = document.getElementById('error');
+      error.textContent = 'Task description cannot be empty!';
+      setTimeout(() => {
+        error.textContent = '';
+      }, 2000);
+    } else {
+      const newTodo = new List(description, complete, index);
+      window.location.reload();
+      addLocalStorage(newTodo);
+    }
+  }
+});
 
-    // Configure button
-    // let completeBtn = document.createElement('input');
-    // completeBtn.type = 'button';
-    // completeBtn.value = 'Clear all completed';
-
-    todo.innerHTML = `<div class="list">
-                        <div>
-                          <input type="checkbox" id="enter-todo">
-                          <label for="enter-todo">
-                            ${todoObj.description}
-                          </label>
-                        </div>
-                        <div class="image">
-                        <img src="${dots}" alt="three dots">
-                        </div>
-                      </div>`;
-
-    container.appendChild(todo);
-    return container;
+// Remove task from list
+const removeBtn = document.querySelectorAll('.remove');
+// console.log(removeBtn)
+removeBtn.forEach((btn) => {
+  btn.addEventListener('click', (e) => {
+    const btnID = e.target.id;
+    remove(btnID);
+    btn.parentElement.parentElement.remove();
+    window.location.reload();
   });
+});
 
-  // Add logic for rendering image here
-  const refreshImageCont = document.querySelector('.refresh-icon');
-  const enterImageCont = document.querySelector('.inputt');
-
-  const myIcon = new Image();
-  myIcon.src = refresh;
-
-  refreshImageCont.appendChild(myIcon);
-
-  const enterIcon = new Image();
-  enterIcon.src = enter;
-  enterImageCont.appendChild(enterIcon);
+/* eslint-disable no-plusplus */
+const boxes = document.getElementsByClassName('entertodo').length;
+function save() {
+  for (let i = 1; i <= boxes; i++) {
+    const checkbox = document.getElementById(String(i));
+    localStorage.setItem(`checkbox${String(i)}`, checkbox.checked);
+  }
 }
 
-document.body.appendChild(renderUI());
+// Loading checkbox status
+for (let i = 1; i <= boxes; i++) {
+  const checked = JSON.parse(localStorage.getItem(`checkbox${String(i)}`));
+  document.getElementById(String(i)).checked = checked;
+}
+
+window.addEventListener('change', save);
+
+// Clear everything from the  on refresh icon click
+const ul = document.getElementById('to-do-container');
+const refresh = document.getElementById('refreshIcon');
+refresh.addEventListener('click', () => {
+  ul.classList.add('active');
+  localStorage.clear();
+  window.location.reload();
+});
+
+const completeAllChecked = document.getElementById('complete');
+completeAllChecked.addEventListener('click', () => {
+  const getTasks = getLocalStorage().localTodos;
+  const unChecked = getTasks.filter((task) => task.checked !== true);
+
+  localStorage.setItem('todolist', JSON.stringify(unChecked));
+});
+
+// Event: Edit To Do Item
+const editBtn = document.querySelectorAll('.edit');
+editBtn.forEach((btn) => {
+  btn.addEventListener('click', (e) => {
+    const { id } = e.target;
+    editLocalStorage(id);
+  });
+});
