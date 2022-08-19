@@ -6,6 +6,7 @@ import {
 import { getLocalStorage, addLocalStorage, editLocalStorage } from './modules/localstorage.js';
 import List from './modules/constructor.js';
 
+
 handleUI();
 add();
 
@@ -35,7 +36,6 @@ enterTodo.addEventListener('keypress', (e) => {
 
 // Remove task from list
 const removeBtn = document.querySelectorAll('.remove');
-// console.log(removeBtn)
 removeBtn.forEach((btn) => {
   btn.addEventListener('click', (e) => {
     const btnID = e.target.id;
@@ -45,22 +45,43 @@ removeBtn.forEach((btn) => {
   });
 });
 
+// Store checked status in localStorage
 /* eslint-disable no-plusplus */
 const boxes = document.getElementsByClassName('entertodo').length;
-function save() {
+export default function statusManager(id) {
   for (let i = 1; i <= boxes; i++) {
     const checkbox = document.getElementById(String(i));
     localStorage.setItem(`checkbox${String(i)}`, checkbox.checked);
+    
+    const getTodos = getLocalStorage().localTodos;
+    const completedTasks = getTodos.filter((task) => task.index === parseInt(id, 10));
+    completedTasks[0].complete = true;
+    getTodos[id - 1].complete = completedTasks[0].complete;
+    const description = 
+    localStorage.setItem('todolist', JSON.stringify(getTodos));
   }
 }
 
-// Loading checkbox status
+// Render checkbox status to UI
 for (let i = 1; i <= boxes; i++) {
-  const checked = JSON.parse(localStorage.getItem(`checkbox${String(i)}`));
-  document.getElementById(String(i)).checked = checked;
+  const getTodos = getLocalStorage().localTodos;
+  if (getTodos[i - 1].complete == true) {
+    const checked = JSON.parse(localStorage.getItem(`checkbox${String(i)}`));
+    document.getElementById(String(i)).checked = checked;
+  }     
 }
 
-window.addEventListener('change', save);
+// Listens to changes on the Checkboxes
+window.addEventListener('change', (e) => {
+  const id = e.target.id;
+  const targetElement = e.target
+  let labelElement = targetElement.nextElementSibling;
+  let labelText = labelElement.innerText;
+  // labelText.strike();
+  labelElement.classList.add('active');
+  
+  statusManager(id);
+});
 
 // Clear everything from the  on refresh icon click
 const ul = document.getElementById('to-do-container');
@@ -71,12 +92,21 @@ refresh.addEventListener('click', () => {
   window.location.reload();
 });
 
-const completeAllChecked = document.getElementById('complete');
-completeAllChecked.addEventListener('click', () => {
+// Delete all completed tasks
+const deleteAllChecked = document.getElementById('complete');
+deleteAllChecked.addEventListener('click', () => {
   const getTasks = getLocalStorage().localTodos;
-  const unChecked = getTasks.filter((task) => task.checked !== true);
-
-  localStorage.setItem('todolist', JSON.stringify(unChecked));
+  let incompleteTodos = getTasks.filter((task) => task.complete !== true);
+  // reset the indices of the remaining tasks after deletion
+  incompleteTodos = incompleteTodos.map((task, index) => {
+    const result = {
+      ...task,
+      index: index + 1,
+    };
+    return result;
+  });
+  localStorage.setItem('todolist', JSON.stringify(incompleteTodos));
+  window.location.reload();
 });
 
 // Event: Edit To Do Item
