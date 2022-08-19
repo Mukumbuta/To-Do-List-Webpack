@@ -6,7 +6,6 @@ import {
 import { getLocalStorage, addLocalStorage, editLocalStorage } from './modules/localstorage.js';
 import List from './modules/constructor.js';
 
-
 handleUI();
 add();
 
@@ -52,12 +51,11 @@ export default function statusManager(id) {
   for (let i = 1; i <= boxes; i++) {
     const checkbox = document.getElementById(String(i));
     localStorage.setItem(`checkbox${String(i)}`, checkbox.checked);
-    
+
     const getTodos = getLocalStorage().localTodos;
     const completedTasks = getTodos.filter((task) => task.index === parseInt(id, 10));
     completedTasks[0].complete = true;
     getTodos[id - 1].complete = completedTasks[0].complete;
-    const description = 
     localStorage.setItem('todolist', JSON.stringify(getTodos));
   }
 }
@@ -65,21 +63,19 @@ export default function statusManager(id) {
 // Render checkbox status to UI
 for (let i = 1; i <= boxes; i++) {
   const getTodos = getLocalStorage().localTodos;
-  if (getTodos[i - 1].complete == true) {
+  if (getTodos[i - 1].complete === true) {
     const checked = JSON.parse(localStorage.getItem(`checkbox${String(i)}`));
     document.getElementById(String(i)).checked = checked;
-  }     
+  }
 }
 
 // Listens to changes on the Checkboxes
 window.addEventListener('change', (e) => {
-  const id = e.target.id;
-  const targetElement = e.target
-  let labelElement = targetElement.nextElementSibling;
-  let labelText = labelElement.innerText;
-  // labelText.strike();
+  const { id } = e.target;
+  const targetElement = e.target;
+  const labelElement = targetElement.nextElementSibling;
   labelElement.classList.add('active');
-  
+
   statusManager(id);
 });
 
