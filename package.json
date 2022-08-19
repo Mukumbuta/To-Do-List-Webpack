@@ -19,7 +19,7 @@
   "bugs": {
     "url": "https://github.com/Mukumbuta/To-Do-List-Webpack/issues"
   },
-  "homepage": "https://github.com/Mukumbuta/To-Do-List-Webpack#readme",
+  "homepage": "https://github.com/Mukumbuta/To-Do-List-Webpack#/src/index.html",
   "devDependencies": {
     "babel-eslint": "^10.1.0",
     "css-loader": "^6.7.1",
