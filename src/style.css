@@ -112,3 +112,7 @@ ul.active {
 .edit:hover + .remove {
   display: inline-block;
 }
+
+label.active {
+  text-decoration: line-through;
+}
