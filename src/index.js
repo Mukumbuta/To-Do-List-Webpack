@@ -1,13 +1,12 @@
 // import _ from 'lodash';
 import './style.css';
-import {
-  add, handleUI, remove,
-} from './modules/UI.js';
-import { getLocalStorage, addLocalStorage, editLocalStorage } from './modules/localstorage.js';
-import List from './modules/constructor.js';
+const  { add, handleUI, remove } = require('./modules/UI.js');
+const { getTodos, addItem, editItem } = require('./modules/localstorage.js');
+const List = require('./modules/constructor.js');
+
 
 handleUI();
-add();
+renderUI();
 
 // Handle DOM events
 // Add task to list
@@ -17,7 +16,7 @@ enterTodo.addEventListener('keypress', (e) => {
     // e.preventDefault();
     const description = document.getElementById('enter-todo').value;
     const complete = false;
-    const todoList = getLocalStorage();
+    const todoList = getTodos();
     const index = todoList.length + 1;
     if (description === '') {
       const error = document.getElementById('error');
@@ -28,7 +27,7 @@ enterTodo.addEventListener('keypress', (e) => {
     } else {
       const newTodo = new List(description, complete, index);
       window.location.reload();
-      addLocalStorage(newTodo);
+      addItem(newTodo);
     }
   }
 });
@@ -52,7 +51,7 @@ export default function statusManager(id) {
     const checkbox = document.getElementById(String(i));
     localStorage.setItem(`checkbox${String(i)}`, checkbox.checked);
 
-    const getTodos = getLocalStorage().localTodos;
+    const getTodos = getTodos().localTodos;
     const completedTasks = getTodos.filter((task) => task.index === parseInt(id, 10));
     completedTasks[0].complete = true;
     getTodos[id - 1].complete = completedTasks[0].complete;
@@ -62,7 +61,7 @@ export default function statusManager(id) {
 
 // Render checkbox status to UI
 for (let i = 1; i <= boxes; i++) {
-  const getTodos = getLocalStorage().localTodos;
+  const getTodos = getTodos().localTodos;
   if (getTodos[i - 1].complete === true) {
     const checked = JSON.parse(localStorage.getItem(`checkbox${String(i)}`));
     document.getElementById(String(i)).checked = checked;
@@ -91,7 +90,7 @@ refresh.addEventListener('click', () => {
 // Delete all completed tasks
 const deleteAllChecked = document.getElementById('complete');
 deleteAllChecked.addEventListener('click', () => {
-  const getTasks = getLocalStorage().localTodos;
+  const getTasks = getTodos().localTodos;
   let incompleteTodos = getTasks.filter((task) => task.complete !== true);
   // reset the indices of the remaining tasks after deletion
   incompleteTodos = incompleteTodos.map((task, index) => {
@@ -110,6 +109,6 @@ const editBtn = document.querySelectorAll('.edit');
 editBtn.forEach((btn) => {
   btn.addEventListener('click', (e) => {
     const { id } = e.target;
-    editLocalStorage(id);
+    editItem(id);
   });
 });

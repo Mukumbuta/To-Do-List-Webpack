@@ -21,7 +21,7 @@ export const handleUI = () => {
   enterImageCont.appendChild(enterIcon);
 };
 
-export const add = () => {
+const renderUI = () => {
   const list = getLocalStorage().localTodos;
   const container = document.getElementById('to-do-container');
   list.forEach((todoObj) => {
