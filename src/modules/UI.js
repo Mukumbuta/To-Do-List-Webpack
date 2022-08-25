@@ -4,7 +4,7 @@ import deleteIcon from '../assets/delete-524.svg';
 import dots from '../assets/three-dots.svg';
 import { getLocalStorage, removeLocalStorage } from './localstorage.js';
 
-export const handleUI = () => {
+const handleUI = () => {
 // Add logic for rendering image here
   const refreshImageCont = document.querySelector('.refresh-icon');
   const enterImageCont = document.querySelector('.inputt');
@@ -46,6 +46,8 @@ const renderUI = () => {
   });
 };
 
-export const remove = (todoID) => {
+const remove = (todoID) => {
   removeLocalStorage(todoID);
 };
+
+module.exports = { handleUI, renderUI, remove };

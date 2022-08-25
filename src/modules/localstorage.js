@@ -49,5 +49,6 @@ const editItem = (id) => {
   });
 };
 
-
-module.exports = { getTodos, addItem, editItem, removeItem };
+module.exports = {
+  getTodos, addItem, editItem, removeItem,
+};

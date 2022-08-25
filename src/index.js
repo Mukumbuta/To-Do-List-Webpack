@@ -1,9 +1,9 @@
 // import _ from 'lodash';
 import './style.css';
-const  { add, handleUI, remove } = require('./modules/UI.js');
+
+const { renderUI, handleUI, remove } = require('./modules/UI.js');
 const { getTodos, addItem, editItem } = require('./modules/localstorage.js');
 const List = require('./modules/constructor.js');
-
 
 handleUI();
 renderUI();
@@ -51,18 +51,18 @@ export default function statusManager(id) {
     const checkbox = document.getElementById(String(i));
     localStorage.setItem(`checkbox${String(i)}`, checkbox.checked);
 
-    const getTodos = getTodos().localTodos;
-    const completedTasks = getTodos.filter((task) => task.index === parseInt(id, 10));
+    const gettodos = getTodos().localTodos;
+    const completedTasks = gettodos.filter((task) => task.index === parseInt(id, 10));
     completedTasks[0].complete = true;
-    getTodos[id - 1].complete = completedTasks[0].complete;
-    localStorage.setItem('todolist', JSON.stringify(getTodos));
+    gettodos[id - 1].complete = completedTasks[0].complete;
+    localStorage.setItem('todolist', JSON.stringify(gettodos));
   }
 }
 
 // Render checkbox status to UI
 for (let i = 1; i <= boxes; i++) {
-  const getTodos = getTodos().localTodos;
-  if (getTodos[i - 1].complete === true) {
+  const gettodos = getTodos().localTodos;
+  if (gettodos[i - 1].complete === true) {
     const checked = JSON.parse(localStorage.getItem(`checkbox${String(i)}`));
     document.getElementById(String(i)).checked = checked;
   }

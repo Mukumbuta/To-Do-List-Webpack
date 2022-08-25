@@ -4,7 +4,7 @@
   "description": ">A To do list prject built with ES6 and Webpack",
   "main": "webpack.config.js",
   "scripts": {
-    "test": "jest --coverage",
+    "test": "jest",
     "watch": "webpack --watch",
     "start": "webpack server --open",
     "build": "webpack"
