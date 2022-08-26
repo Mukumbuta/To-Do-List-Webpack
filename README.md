@@ -42,8 +42,8 @@ These were linter tests mainly
 - Html, run `npx stylelint "**/*.{css,scss}"`
 - Javascript `npx eslint .`
 
-
-
+## Deployment
+- Link: https://mukumbuta.github.io/To-Do-List-Webpack/dist/
 
 ## Authors
 
