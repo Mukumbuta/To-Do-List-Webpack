@@ -1,15 +1,17 @@
 // import _ from 'lodash';
 import './style.css';
 
-const { renderUI, handleUI, remove } = require('./modules/UI.js');
-const { getTodos, addItem, editItem } = require('./modules/localstorage.js');
-const List = require('./modules/constructor.js');
+import  { renderUI, handleUI } from './modules/UI.js';
+import  { getTodos, addItem, editItem, removeItem } from './modules/localstorage.js';
+import  List from './modules/constructor.js';
 
 handleUI();
 renderUI();
 
 // Handle DOM events
 // Add task to list
+const editBtn = document.querySelectorAll('.edit');
+const removeBtn = document.querySelectorAll('.remove');
 const enterTodo = document.getElementById('enter-todo');
 enterTodo.addEventListener('keypress', (e) => {
   if (e.key === 'Enter') {
@@ -33,12 +35,10 @@ enterTodo.addEventListener('keypress', (e) => {
 });
 
 // Remove task from list
-const removeBtn = document.querySelectorAll('.remove');
 removeBtn.forEach((btn) => {
   btn.addEventListener('click', (e) => {
     const btnID = e.target.id;
-    remove(btnID);
-    btn.parentElement.parentElement.remove();
+    removeItem(btnID, btn);
     window.location.reload();
   });
 });
@@ -46,7 +46,7 @@ removeBtn.forEach((btn) => {
 // Store checked status in localStorage
 /* eslint-disable no-plusplus */
 const boxes = document.getElementsByClassName('entertodo').length;
-export default function statusManager(id) {
+export default function statusManager(id, editbutton, deletebutton) {
   for (let i = 1; i <= boxes; i++) {
     const checkbox = document.getElementById(String(i));
     localStorage.setItem(`checkbox${String(i)}`, checkbox.checked);
@@ -56,6 +56,9 @@ export default function statusManager(id) {
     completedTasks[0].complete = true;
     gettodos[id - 1].complete = completedTasks[0].complete;
     localStorage.setItem('todolist', JSON.stringify(gettodos));
+
+    editbutton.classList.add('active');
+    deletebutton.classList.add('active');
   }
 }
 
@@ -72,10 +75,16 @@ for (let i = 1; i <= boxes; i++) {
 window.addEventListener('change', (e) => {
   const { id } = e.target;
   const targetElement = e.target;
-  const labelElement = targetElement.nextElementSibling;
-  labelElement.classList.add('active');
+  const parent = targetElement.parentElement
+  const editBtnDiv = parent.nextElementSibling;
+  const children = editBtnDiv.children;
+  const editbutton = children[0];
+  const deletebutton = children[1];
 
-  statusManager(id);
+  const labelElement = targetElement.nextElementSibling;
+
+  labelElement.classList.add('active');
+  statusManager(id, editbutton, deletebutton);
 });
 
 // Clear everything from the  on refresh icon click
@@ -105,7 +114,6 @@ deleteAllChecked.addEventListener('click', () => {
 });
 
 // Event: Edit To Do Item
-const editBtn = document.querySelectorAll('.edit');
 editBtn.forEach((btn) => {
   btn.addEventListener('click', (e) => {
     const { id } = e.target;
