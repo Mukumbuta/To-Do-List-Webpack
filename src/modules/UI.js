@@ -2,7 +2,7 @@ import refresh from '../assets/refresh.svg';
 import enter from '../assets/enter-12.svg';
 import deleteIcon from '../assets/delete-524.svg';
 import dots from '../assets/three-dots.svg';
-import { getTodos, removeItems } from './localstorage.js';
+import { getTodos } from './localstorage.js';
 
 const handleUI = () => {
 // Add logic for rendering image here

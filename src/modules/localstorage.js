@@ -28,7 +28,7 @@ const removeItem = (todoIndex, btn) => {
     return result;
   });
   localStorage.setItem('todolist', JSON.stringify(alllocaltodos));
-  btn.parentElement.parentElement.remove(); 
+  btn.parentElement.parentElement.remove();
 };
 
 const editItem = (id) => {

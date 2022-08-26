@@ -1,9 +1,11 @@
 // import _ from 'lodash';
 import './style.css';
 
-import  { renderUI, handleUI } from './modules/UI.js';
-import  { getTodos, addItem, editItem, removeItem } from './modules/localstorage.js';
-import  List from './modules/constructor.js';
+import { renderUI, handleUI } from './modules/UI.js';
+import {
+  getTodos, addItem, editItem, removeItem,
+} from './modules/localstorage.js';
+import List from './modules/constructor.js';
 
 handleUI();
 renderUI();
@@ -75,9 +77,9 @@ for (let i = 1; i <= boxes; i++) {
 window.addEventListener('change', (e) => {
   const { id } = e.target;
   const targetElement = e.target;
-  const parent = targetElement.parentElement
-  const editBtnDiv = parent.nextElementSibling;
-  const children = editBtnDiv.children;
+  const parent = targetElement.parentElement;
+  const editDeleteDiv = parent.nextElementSibling;
+  const { children } = editDeleteDiv;
   const editbutton = children[0];
   const deletebutton = children[1];
 
