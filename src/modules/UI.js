@@ -2,9 +2,9 @@ import refresh from '../assets/refresh.svg';
 import enter from '../assets/enter-12.svg';
 import deleteIcon from '../assets/delete-524.svg';
 import dots from '../assets/three-dots.svg';
-import { getLocalStorage, removeLocalStorage } from './localstorage.js';
+import { getTodos } from './localstorage.js';
 
-export const handleUI = () => {
+const handleUI = () => {
 // Add logic for rendering image here
   const refreshImageCont = document.querySelector('.refresh-icon');
   const enterImageCont = document.querySelector('.inputt');
@@ -21,8 +21,8 @@ export const handleUI = () => {
   enterImageCont.appendChild(enterIcon);
 };
 
-export const add = () => {
-  const list = getLocalStorage().localTodos;
+const renderUI = () => {
+  const list = getTodos().localTodos;
   const container = document.getElementById('to-do-container');
   list.forEach((todoObj) => {
     const todo = document.createElement('li');
@@ -46,6 +46,4 @@ export const add = () => {
   });
 };
 
-export const remove = (todoID) => {
-  removeLocalStorage(todoID);
-};
+export { handleUI, renderUI };

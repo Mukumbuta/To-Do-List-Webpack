@@ -1,4 +1,4 @@
-export const getLocalStorage = () => {
+const getTodos = () => {
   let localTodos;
   if (!localStorage.getItem('todolist')) {
     localTodos = [];
@@ -10,17 +10,16 @@ export const getLocalStorage = () => {
   return { localTodos, length };
 };
 
-export const addLocalStorage = (addedTodo) => {
-  const alltodos = getLocalStorage().localTodos;
+const addItem = (addedTodo) => {
+  const alltodos = getTodos().localTodos;
   alltodos.push(addedTodo);
   localStorage.setItem('todolist', JSON.stringify(alltodos));
 };
 
-export const removeLocalStorage = (todoIndex) => {
-  let alllocaltodos = getLocalStorage().localTodos;
+const removeItem = (todoIndex, btn) => {
+  let alllocaltodos = getTodos().localTodos;
   alllocaltodos = alllocaltodos.filter((todo) => todo.index !== parseInt(todoIndex, 10));
 
-  // reset the indices of the remaining tasks after deletion
   alllocaltodos = alllocaltodos.map((task, index) => {
     const result = {
       ...task,
@@ -29,12 +28,12 @@ export const removeLocalStorage = (todoIndex) => {
     return result;
   });
   localStorage.setItem('todolist', JSON.stringify(alllocaltodos));
+  btn.parentElement.parentElement.remove();
 };
 
-// Edit To DO Item
-export const editLocalStorage = (id) => {
+const editItem = (id) => {
   const inputBox = document.getElementById('enter-todo');
-  const localToDos = getLocalStorage().localTodos;
+  const localToDos = getTodos().localTodos;
   const edited = localToDos.filter((todo) => todo.index === parseInt(id, 10));
   inputBox.value = edited[0].description;
 
@@ -47,4 +46,8 @@ export const editLocalStorage = (id) => {
       localStorage.setItem('todolist', JSON.stringify(localToDos));
     }
   });
+};
+
+export {
+  getTodos, addItem, editItem, removeItem,
 };

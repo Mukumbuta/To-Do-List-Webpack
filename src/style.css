@@ -97,7 +97,8 @@ img:hover {
   font-weight: 600;
 }
 
-ul.active {
+ul.active,
+.remove {
   display: none;
 }
 
@@ -105,14 +106,14 @@ ul.active {
   display: flex;
 }
 
-.remove {
+label.active {
+  text-decoration: line-through;
+}
+
+.edit.active {
   display: none;
 }
 
-.edit:hover + .remove {
+.remove.active {
   display: inline-block;
-}
-
-label.active {
-  text-decoration: line-through;
 }
