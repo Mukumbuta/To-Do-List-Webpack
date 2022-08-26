@@ -1,4 +1,4 @@
-const { addItem } = require('./src/modules/localstorage');
+import { addItem } from './src/modules/localstorage';
 
 const localStorageMock = {
   getItem: jest.fn(),

@@ -2,7 +2,7 @@ import refresh from '../assets/refresh.svg';
 import enter from '../assets/enter-12.svg';
 import deleteIcon from '../assets/delete-524.svg';
 import dots from '../assets/three-dots.svg';
-import { getLocalStorage, removeLocalStorage } from './localstorage.js';
+import { getTodos, removeItems } from './localstorage.js';
 
 const handleUI = () => {
 // Add logic for rendering image here
@@ -22,7 +22,7 @@ const handleUI = () => {
 };
 
 const renderUI = () => {
-  const list = getLocalStorage().localTodos;
+  const list = getTodos().localTodos;
   const container = document.getElementById('to-do-container');
   list.forEach((todoObj) => {
     const todo = document.createElement('li');
@@ -46,8 +46,4 @@ const renderUI = () => {
   });
 };
 
-const remove = (todoID) => {
-  removeLocalStorage(todoID);
-};
-
-module.exports = { handleUI, renderUI, remove };
+export { handleUI, renderUI };

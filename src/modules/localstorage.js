@@ -16,11 +16,10 @@ const addItem = (addedTodo) => {
   localStorage.setItem('todolist', JSON.stringify(alltodos));
 };
 
-const removeItem = (todoIndex) => {
+const removeItem = (todoIndex, btn) => {
   let alllocaltodos = getTodos().localTodos;
   alllocaltodos = alllocaltodos.filter((todo) => todo.index !== parseInt(todoIndex, 10));
 
-  // reset the indices of the remaining tasks after deletion
   alllocaltodos = alllocaltodos.map((task, index) => {
     const result = {
       ...task,
@@ -29,9 +28,9 @@ const removeItem = (todoIndex) => {
     return result;
   });
   localStorage.setItem('todolist', JSON.stringify(alllocaltodos));
+  btn.parentElement.parentElement.remove(); 
 };
 
-// Edit To DO Item
 const editItem = (id) => {
   const inputBox = document.getElementById('enter-todo');
   const localToDos = getTodos().localTodos;
@@ -49,6 +48,6 @@ const editItem = (id) => {
   });
 };
 
-module.exports = {
+export {
   getTodos, addItem, editItem, removeItem,
 };

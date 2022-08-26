@@ -106,14 +106,14 @@ ul.active,
   display: flex;
 }
 
-.edit:hover + .remove {
-  display: inline-block;
-}
-
 label.active {
   text-decoration: line-through;
 }
 
-label.active + .edit {
+.edit.active {
   display: none;
+}
+
+.remove.active {
+  display: inline-block;
 }
