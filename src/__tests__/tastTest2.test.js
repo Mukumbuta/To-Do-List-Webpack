@@ -2,6 +2,7 @@
  * @jest-environment jsdom
  */
 import { list, MockStorage } from './taskTest.test.js';
+
 const clearAll = `
         <div class="remove">
             <a class="removebutton">Clear All</a>

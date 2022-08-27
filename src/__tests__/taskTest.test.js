@@ -4,7 +4,7 @@
 
 import MockStorage from '../__mocks__/mockStorage.js';
 
-import Lists from '../tasksTodo';
+import Lists from '../tasksTodo.js';
 
 const list = new Lists();
 
